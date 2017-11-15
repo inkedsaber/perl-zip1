@@ -3,26 +3,51 @@ use strict;
 use warnings;
 
 use Term::ANSIColor;
+use Getopt::Long;
+
+my $help;
+my $extract;
+GetOptions(
+    "help"    => \$help,
+    "extract" => \$extract,
+) or die("Error in command line arguments\n");
 
 # For future use:
 # use utf8;
 # use Encode;
 
-(my $dir = $ARGV[0]) or die colored("Error: please define path.\nUsage:\n\n\t/path/to/zip1 [path]\n\n", 'red');
+sub help {
+    die colored(
+      "@_" . "Usage:\t/path/to/zip1 [options] [path]\n\t\t-h, --help\n\t\t-e, --extract\n", 'yellow');
+}
 
-chdir($dir) or die colored("Error: can't chdir to $dir $!", 'red');
+if ($help) {
+    help();
+}
 
-opendir my $dh, $dir or die colored("Error: couldn't open dir: $!\n", 'red');
+(my $dir = $ARGV[0])
+  or help("Error: please define path.\n");
+
+chdir($dir)
+  or die colored("Error: can't chdir to $dir $!", 'red');
+
+opendir my $dh, $dir
+  or die colored("Error: couldn't open dir: $!\n", 'red');
+
 foreach (readdir $dh) {
     next if /^\.+$/;
     if ((my $newname = $_) =~ s/zip1$/zip/) {
 
         print colored("OK: $_ -> $newname\n", 'bright_green');
-        rename($_, $newname) or die colored("Error: can't rename: $!", 'red');
+        rename($_, $newname)
+          or die colored("Error: can't rename: $!", 'red');
 
-        # (my $dirname = $newname) =~ s/\.zip$//;
-        system ('unzip', "$newname") == 0
-            or die colored("Error: unzipping $newname failed: $?", 'red');
+        if ($extract) {
+            system('unzip', "$newname") == 0
+              or die colored("Error: unzipping $newname failed: $?", 'red');
+            print colored("OK: $newname\'s content is extracted\n", 'bright_green');
+        }
+
         unlink $newname;
     }
 }
