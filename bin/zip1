@@ -1,7 +1,8 @@
 #!/usr/bin/env perl
 use strict; use warnings;
 
-my $dir = $ARGV[0];
+
+(my $dir = $ARGV[0]) or die "Error: please define path.\nUsage:\n\n\t/path/to/zip1 [path]\n\n";
 
 chdir($dir) or die "Error: can't chdir to $dir $!";
 
