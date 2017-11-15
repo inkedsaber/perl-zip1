@@ -1,22 +1,28 @@
 #!/usr/bin/env perl
-use strict; use warnings;
+use strict;
+use warnings;
 
+use Term::ANSIColor;
 
-(my $dir = $ARGV[0]) or die "Error: please define path.\nUsage:\n\n\t/path/to/zip1 [path]\n\n";
+# For future use:
+# use utf8;
+# use Encode;
 
-chdir($dir) or die "Error: can't chdir to $dir $!";
+(my $dir = $ARGV[0]) or die colored("Error: please define path.\nUsage:\n\n\t/path/to/zip1 [path]\n\n", 'red');
 
-opendir my $dh, $dir or die "Error: couldn't open dir: $!\n";
+chdir($dir) or die colored("Error: can't chdir to $dir $!", 'red');
+
+opendir my $dh, $dir or die colored("Error: couldn't open dir: $!\n", 'red');
 foreach (readdir $dh) {
     next if /^\.+$/;
     if ((my $newname = $_) =~ s/zip1$/zip/) {
 
-        print "OK: $_ -> $newname\n";
-        rename($_, $newname) or die "Error: can't rename: $!";
+        print colored("OK: $_ -> $newname\n", 'bright_green');
+        rename($_, $newname) or die colored("Error: can't rename: $!", 'red');
 
         # (my $dirname = $newname) =~ s/\.zip$//;
         system ('unzip', "$newname") == 0
-            or die "Error: unzipping $newname failed: $?";
+            or die colored("Error: unzipping $newname failed: $?", 'red');
         unlink $newname;
     }
 }
