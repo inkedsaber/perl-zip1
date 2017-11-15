@@ -13,9 +13,9 @@ foreach (readdir $dh) {
         print "OK: $_ -> $newname\n";
         rename($_, $newname) or die "Error: can't rename: $!";
 
-        (my $dirname = $newname) =~ s/\.zip$//;
+        # (my $dirname = $newname) =~ s/\.zip$//;
         system ('unzip', "$newname") == 0
-            or die "Error: unzipping $newname to $dirname failed: $?";
+            or die "Error: unzipping $newname failed: $?";
         unlink $newname;
     }
 }
