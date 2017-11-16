@@ -3,37 +3,31 @@ use strict;
 use warnings;
 
 use Term::ANSIColor;
-use Getopt::Long;
+use Getopt::Long 'HelpMessage';
 
-my $help;
-my $extract;
-my $verbose;
+Getopt::Long::Configure ("bundling");
+
 GetOptions(
-    "help"    => \$help,
-    "extract" => \$extract,
-    "verbose" => \$verbose,
-) or die("Error in command line arguments\n");
+    "d|dir=s"   => \ my $dir,
+    "e|extract" => \ my $extract,
+    "v|verbose" => \ my $verbose,
+    "h|help"    => sub { HelpMessage(0) },
+) or HelpMessage(1);
+
+HelpMessage(1) unless $dir;
+
+=head1 SYNOPSIS
+
+  --dir,-d        Directory where '.zip1' files located (required)
+  --extract,-e    Extract content from renamed files
+  --verbose,-v    Display additional info
+  --help,-h       Print this help
+
+=cut
 
 # For future use:
 # use utf8;
 # use Encode;
-
-sub help {
-    die colored(
-        "@_"
-          . "Usage:\t/path/to/zip1 [options] [path]"
-          . "\n\t\t-h, --help"
-          . "\n\t\t-e, --extract"
-          . "\n\t\t-v, --verbose\n",
-        'yellow');
-}
-
-if ($help) {
-    help();
-}
-
-(my $dir = $ARGV[0])
-  or help("Error: please define path.\n");
 
 chdir($dir)
   or die colored("Error: can't chdir to $dir $!", 'red');
