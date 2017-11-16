@@ -8,10 +8,11 @@ use Getopt::Long 'HelpMessage';
 Getopt::Long::Configure ("bundling");
 
 GetOptions(
-    "d|dir=s"   => \ my $dir,
-    "e|extract" => \ my $extract,
-    "v|verbose" => \ my $verbose,
-    "h|help"    => sub { HelpMessage(0) },
+    "dir|d=s"   => \ my $dir,
+    "extract|e" => \ my $extract,
+    "verbose|v"   => \ my $verbose,
+    "version|v" => \(my $ver = '0.2.2'),
+    "help|h"    => sub { HelpMessage(0) },
 ) or HelpMessage(1);
 
 HelpMessage(1) unless $dir;
@@ -20,8 +21,12 @@ HelpMessage(1) unless $dir;
 
   --dir,-d        Directory where '.zip1' files located (required)
   --extract,-e    Extract content from renamed files
-  --verbose,-v    Display additional info
+  --verbose,-v    Show additional info
   --help,-h       Print this help
+
+=head1 VERSION
+
+0.2.1
 
 =cut
 
