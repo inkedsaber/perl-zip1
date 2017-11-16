@@ -9,9 +9,9 @@ my $help;
 my $extract;
 my $verbose;
 GetOptions(
-    "\nhelp"    => \$help,
-    "\nextract" => \$extract,
-    "\nverbose" => \$verbose,
+    "help"    => \$help,
+    "extract" => \$extract,
+    "verbose" => \$verbose,
 ) or die("Error in command line arguments\n");
 
 # For future use:
@@ -22,9 +22,9 @@ sub help {
     die colored(
         "@_"
           . "Usage:\t/path/to/zip1 [options] [path]"
-          . "\t\t-h, --help"
-          . "\t\t-e, --extract"
-          . "\t\t-v, --verbose\n",
+          . "\n\t\t-h, --help"
+          . "\n\t\t-e, --extract"
+          . "\n\t\t-v, --verbose\n",
         'yellow');
 }
 
