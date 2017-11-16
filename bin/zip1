@@ -7,9 +7,11 @@ use Getopt::Long;
 
 my $help;
 my $extract;
+my $verbose;
 GetOptions(
     "help"    => \$help,
     "extract" => \$extract,
+    "verbose" => \$verbose,
 ) or die("Error in command line arguments\n");
 
 # For future use:
@@ -18,7 +20,12 @@ GetOptions(
 
 sub help {
     die colored(
-      "@_" . "Usage:\t/path/to/zip1 [options] [path]\n\t\t-h, --help\n\t\t-e, --extract\n", 'yellow');
+        "@_"
+          . "Usage:\t/path/to/zip1 [options] [path]"
+          . "\t\t-h, --help"
+          . "\t\t-e, --extract"
+          . "\t\t-v, --verbose\n",
+        'yellow');
 }
 
 if ($help) {
@@ -43,8 +50,13 @@ foreach (readdir $dh) {
           or die colored("Error: can't rename: $!", 'red');
 
         if ($extract) {
-            system('unzip', "$newname") == 0
-              or die colored("Error: unzipping $newname failed: $?", 'red');
+            if ($verbose) {
+                system('unzip', "$newname") == 0
+                  or die colored("Error: unzipping $newname failed: $?", 'red');
+            } else {
+                system('unzip', '-q', "$newname") == 0
+                  or die colored("Error: unzipping $newname failed: $?", 'red');
+            }
             print colored("OK: $newname\'s content is extracted\n", 'bright_green');
         }
 
