@@ -9,9 +9,9 @@ my $help;
 my $extract;
 my $verbose;
 GetOptions(
-    "help"    => \$help,
-    "extract" => \$extract,
-    "verbose" => \$verbose,
+    "\nhelp"    => \$help,
+    "\nextract" => \$extract,
+    "\nverbose" => \$verbose,
 ) or die("Error in command line arguments\n");
 
 # For future use:
