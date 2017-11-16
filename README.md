@@ -15,7 +15,9 @@ choice with '.zip1' extension to '.zip'.
 # Usage:
 
 ```
-Usage:  /path/to/zip1 [options] [path]
-        -h, --help
-        -e, --extract
+Usage:
+  --dir,-d        Directory where '.zip1' files located (required)
+  --extract,-e    Extract content from renamed files
+  --verbose,-v    Display additional info
+  --help,-h       Print this help
 ```
