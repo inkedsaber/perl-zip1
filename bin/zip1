@@ -10,7 +10,7 @@ Getopt::Long::Configure ("bundling");
 GetOptions(
     "dir|d=s"   => \ my $dir,
     "extract|e" => \ my $extract,
-    "verbose|v"   => \ my $verbose,
+    "verbose|v" => \ my $verbose,
     "version|v" => \(my $ver = '0.2.2'),
     "help|h"    => sub { HelpMessage(0) },
 ) or HelpMessage(1);
