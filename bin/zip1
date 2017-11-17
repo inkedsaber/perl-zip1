@@ -3,6 +3,10 @@ use strict;
 use warnings;
 
 use Term::ANSIColor;
+
+use FindBin;
+use lib "$FindBin::Bin/..";
+
 use Getopt::Long 'HelpMessage';
 
 Getopt::Long::Configure ("bundling");
@@ -11,9 +15,16 @@ GetOptions(
     "dir|d=s"   => \ my $dir,
     "extract|e" => \ my $extract,
     "verbose|v" => \ my $verbose,
-    "version|v" => \(my $ver = '0.2.2'),
+    # "version|v" => \(my $ver = '0.2.2'),
     "help|h"    => sub { HelpMessage(0) },
 ) or HelpMessage(1);
+
+my $defdir = "$FindBin::Bin/../default_dir.txt";
+if (open(my $fh, '<:encoding(UTF-8)', $defdir)) {
+    my $row = <$fh>;
+    print colored("OK: found path '$row' in '$FindBin::Bin/../default_dir.txt'\n", 'bright_green');
+    $dir = $row;
+}
 
 HelpMessage(1) unless $dir;
 
@@ -26,7 +37,7 @@ HelpMessage(1) unless $dir;
 
 =head1 VERSION
 
-0.2.1
+0.2.2.1
 
 =cut
 
