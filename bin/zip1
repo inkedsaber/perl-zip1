@@ -60,13 +60,8 @@ foreach (readdir $dh) {
           or die colored("Error: can't rename: $!", 'red');
 
         if ($extract) {
-            if ($verbose) {
-                system('unzip', $newname) == 0
-                  or die colored("Error: unzipping $newname failed: $?", 'red');
-            } else {
-                system('unzip', '-q', $newname) == 0
-                  or die colored("Error: unzipping $newname failed: $?", 'red');
-            }
+            system('unzip', $verbose ? () : '-q', $newname) == 0
+              or die colored("Error: unzipping $newname failed: $?", 'red');
             print colored("OK: $newname\'s content is extracted\n", 'bright_green');
 
             unlink $newname;
