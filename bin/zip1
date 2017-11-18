@@ -68,9 +68,9 @@ foreach (readdir $dh) {
                   or die colored("Error: unzipping $newname failed: $?", 'red');
             }
             print colored("OK: $newname\'s content is extracted\n", 'bright_green');
-        }
 
-        unlink $newname;
+            unlink $newname;
+        }
     }
 }
 closedir $dh;
