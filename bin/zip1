@@ -2,8 +2,10 @@
 use strict;
 use warnings;
 
-use Term::ANSIColor;
+use Encode;
+binmode(STDOUT, ":utf8");
 
+use Term::ANSIColor;
 use FindBin;
 use lib "$FindBin::Bin/..";
 
@@ -13,6 +15,7 @@ Getopt::Long::Configure ("bundling");
 
 GetOptions(
     "dir|d=s"   => \ my $dir,
+    "unicode|u" => \ my $unicode,
     "extract|e" => \ my $extract,
     "verbose|v" => \ my $verbose,
     # "version|v" => \(my $ver = '0.2.2'),
@@ -31,13 +34,14 @@ HelpMessage(1) unless $dir;
 =head1 SYNOPSIS
 
   --dir,-d        Directory where '.zip1' files located (required)
+  --unicode,-u    Name of the file contains unicode symbols
   --extract,-e    Extract content from renamed files
   --verbose,-v    Show additional info
   --help,-h       Print this help
 
 =head1 VERSION
 
-0.2.2.1
+0.2.3
 
 =cut
 
@@ -55,6 +59,9 @@ foreach (readdir $dh) {
     next if /^\.+$/;
     if ((my $newname = $_) =~ s/zip1$/zip/) {
 
+        if ($unicode) {
+            $newname =~ s/_*(\d{5})(?:_*)(\.\w+$)?/chr($1).($2||'')/eg;
+        }
         print colored("OK: $_ -> $newname\n", 'bright_green');
         rename($_, $newname)
           or die colored("Error: can't rename: $!", 'red');
