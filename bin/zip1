@@ -62,7 +62,7 @@ foreach (readdir $dh) {
         if ($extract) {
             system('unzip', $verbose ? () : '-q', $newname) == 0
               or die colored("Error: unzipping $newname failed: $?", 'red');
-            print colored("OK: $newname\'s content is extracted\n", 'bright_green');
+            print colored("OK: $newname\'s content extracted\n", 'bright_green');
 
             unlink $newname;
         }
