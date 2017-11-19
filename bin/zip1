@@ -45,10 +45,6 @@ HelpMessage(1) unless $dir;
 
 =cut
 
-# For future use:
-# use utf8;
-# use Encode;
-
 chdir($dir)
   or die colored("Error: can't chdir to $dir $!", 'red');
 
