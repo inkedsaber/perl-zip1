@@ -44,7 +44,7 @@ HelpMessage(1) unless $dir;
 
 =head1 VERSION
 
-0.2.3
+0.3
 
 =cut
 
