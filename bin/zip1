@@ -9,6 +9,9 @@ use Term::ANSIColor;
 use FindBin;
 use lib "$FindBin::Bin/..";
 
+use DateTime;
+my $dt = DateTime->today;
+
 use Getopt::Long 'HelpMessage';
 
 Getopt::Long::Configure ("bundling");
@@ -63,7 +66,7 @@ foreach (readdir $dh) {
           or die colored("Error: can't rename: $!", 'red');
 
         if ($extract) {
-            system('unzip', $verbose ? () : '-q', $newname) == 0
+            system('unzip', $verbose ? () : '-q', '-d', "$dir/" . $dt->date, $newname) == 0
               or die colored("Error: unzipping $newname failed: $?", 'red');
             print colored("OK: $newname\'s content extracted\n", 'bright_green');
 
