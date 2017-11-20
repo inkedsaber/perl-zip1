@@ -5,8 +5,8 @@ Probably useless for most people, created mostly for fun.
 
 # Overview:
 
-Script (for now) that simply renames all your files in one directory of your
-choice with '.zip1' extension to '.zip'.
+Script that simply renames all your files in one directory of your
+choice with '.zip1' extension to '.zip', also can extract content from renamed files into newly created folder.
 
 
 # Version 0.3:
