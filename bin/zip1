@@ -20,7 +20,6 @@ GetOptions(
     "dir|d=s"   => \ my $dir,
     "unicode|u" => \ my $unicode,
     "extract|e" => \ my $extract,
-    "verbose|v" => \ my $verbose,
     # "version|v" => \(my $ver = '0.2.2'),
     "help|h"    => sub { HelpMessage(0) },
 ) or HelpMessage(1);
@@ -39,7 +38,6 @@ HelpMessage(1) unless $dir;
   --dir,-d        Directory where '.zip1' files located (required)
   --unicode,-u    Name of the file contains unicode symbols
   --extract,-e    Extract content from renamed files
-  --verbose,-v    Show additional info
   --help,-h       Print this help
 
 =head1 VERSION
@@ -66,11 +64,11 @@ foreach (readdir $dh) {
           or die colored("Error: can't rename: $!", 'red');
 
         if ($extract) {
-            system('unzip', $verbose ? () : '-q', '-d', "$dir/" . $dt->date, $newname) == 0
+            system('open', $newname) == 0
               or die colored("Error: unzipping $newname failed: $?", 'red');
             print colored("OK: $newname\'s content extracted\n", 'bright_green');
 
-            unlink $newname;
+            # unlink $newname;
         }
     }
 }
