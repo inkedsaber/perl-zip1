@@ -26,6 +26,5 @@ Usage:
   --dir,-d        Directory where '.zip1' files located (required)
   --unicode,-u    Name of the file contains unicode symbols
   --extract,-e    Extract content from renamed files
-  --verbose,-v    Display additional info
   --help,-h       Print this help
 ```
